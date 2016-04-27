@@ -67,14 +67,6 @@ var insertToMavenLink = function(title){
      });
 }
 */ 
-var helloworldfunction = function() {
-    var filehelper = require('./../helpers/filehelper.js');
-   filehelper('./config/bambooapi.txt', function(result){
-       console.log(result);
-   });
-}
-
-helloworldfunction();   
 
 router.get('/', function(req, res, next) {
    //controllers.getBambooTimeOffResult();
