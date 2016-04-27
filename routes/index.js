@@ -5,7 +5,6 @@ var router = express.Router();
 var controllers = require('./../controllers/apicontrollers');
 
 router.get('/', function(req, res, next) {
-   //controllers.getBambooTimeOffResult();
    res.render('index', { title: 'hello',body: 'bodytext'});
 });
 
