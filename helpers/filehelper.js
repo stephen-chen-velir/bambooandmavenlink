@@ -3,7 +3,7 @@ var filehelper = function(filename, fn) {
     var fs = require('fs');
     fs.readFile(filename, 'utf-8', (err, data) => {
         if (err) {
-            console.log(error);
+            console.log(err);
         }
         content = data;
         fn(data);
