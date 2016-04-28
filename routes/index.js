@@ -5,6 +5,7 @@ var router = express.Router();
 var controllers = require('./../controllers/apicontrollers');
 
 router.get('/', function(req, res, next) {
+   //controllers.getBambooTimeOffResult();
    res.render('index', { title: 'hello',body: 'bodytext'});
 });
 
@@ -14,11 +15,11 @@ router.get('/', function(req, res, next) {
 
 var CronJob = require('cron').CronJob;
 var job = new CronJob({
-  cronTime: '00 26 16 * * *',
+  cronTime: '00 00 16 * * *',
   onTick: function() {
     /*
-     * Runs every weekday (Monday through Friday)
-     * at 11:30:00 AM. It does not run on Saturday
+     * Runs every day
+     * at 10:30:00 AM. It does not run on Saturday
      * or Sunday.
      */
      controllers.getBambooTimeOffResult();

@@ -2,8 +2,8 @@ module.exports = {
     getBambooTimeOffResult : function (){
         var filehelper = require('./../helpers/filehelper.js');
         filehelper('./config/bambooapi.txt', function(result){
-            console.log(result);
-            var BambooAPIUrl = 'https://{BAMBOOAPI}@api.bamboohr.com/api/gateway.php/velir/v1/time_off/requests/';
+            //var datehelper = require('./../helpers/datehelper.js');
+            var BambooAPIUrl = 'https://{BAMBOOAPI}@api.bamboohr.com/api/gateway.php/velir/v1/time_off/requests/?status=approved';
             BambooAPIUrl = BambooAPIUrl.replace('{BAMBOOAPI}', result);
             var request = require('request');
             request(BambooAPIUrl, function(error, response, body){
@@ -28,7 +28,7 @@ var getBambooTimeOffResponse = function (error, response, body) {
 }
 
 var parseBambooResponse = function (err, result){
-    var timeoffrequest = require('./../models/timeoffrequest.js');
+    //var timeoffrequest = require('./../models/timeoffrequest.js');
     console.log('first function is done');
     var times = result.requests;
     console.log("getting times of request");
@@ -43,13 +43,22 @@ var processBamBooRespose = function (bamboomreponse){
         var timeoffrequest = require('./../models/timeoffrequest.js');
         var _ = require('lodash');
         var democounter = 0;
+        var datehelper = require('./../helpers/datehelper.js');
+        //console.log(bamboomreponse);
         _.forEach(bamboomreponse, function(value){
-            if (democounter < 2){
+            //if (democounter < 2){
+            //    var output = timeoffrequest.mavenlinkAPIOut(value);
+                //insertToMavenLinkRequest(output,result);
+            //}
+            //console.log(value.status[0].$.lastChanged);
+            if (value.status[0].$.lastChanged == datehelper.getYesterday()){
+                console.log(value.$.id);
                 var output = timeoffrequest.mavenlinkAPIOut(value);
                 insertToMavenLinkRequest(output,result);
+                democounter++;
             }
-            democounter++;
         });
+        console.log(democounter);
     });
 }
 
@@ -74,40 +83,3 @@ var insertToMavenLinkResponse = function(error, response, body){
          console.log("Data inserted");
      }
 }
-
-
-/*
-var getBambooTimeOffResult = function(){
-     var request = require('request'); 
-     request(BambooAPIUrl, function (error, response, body) {
-          if (error)
-          {
-                  console.log(error);
-          }
-          if (!error && response.statusCode == 200) {
-              var parseString = require('xml2js').parseString;
-              var xml = body;
-              parseString(xml,function(err, result){
-                  console.log('first function is done');
-                  var times = result.requests;
-                  //console.log(times.count());
-                  console.log("getting times of request");
-                  var requestresults = result.requests.request;
-                  console.log(requestresults.length);
-                  for(var i=0; i< requestresults.length; i++){
-                     console.log("Insert record: " + (i+1));
-                     var output = timeoffrequest.mavenlinkAPIOut(requestresults[i])
-                     insertToMavenLink(output)
-                  }
-                  
-                  //var output = timeoffrequest.mavenlinkAPIOut(result.requests.request[0])
-                  //console.log(output);
-                  //insertToMavenLink(output);
-                  
-                  //console.log(times);
-                  //return times;
-              });
-          }
-    });
-}
-*/
