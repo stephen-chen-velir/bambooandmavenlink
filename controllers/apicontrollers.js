@@ -2,9 +2,10 @@ module.exports = {
     getBambooTimeOffResult : function (){
         var filehelper = require('./../helpers/filehelper.js');
         filehelper('./config/bambooapi.txt', function(result){
-            //var datehelper = require('./../helpers/datehelper.js');
-            var BambooAPIUrl = 'https://{BAMBOOAPI}@api.bamboohr.com/api/gateway.php/velir/v1/time_off/requests/?status=approved';
-            BambooAPIUrl = BambooAPIUrl.replace('{BAMBOOAPI}', result);
+            var datehelper = require('./../helpers/datehelper.js');
+            var BambooAPIUrl = 'https://{BAMBOOAPI}@api.bamboohr.com/api/gateway.php/velir/v1/time_off/requests/?start={DATE}&status=approved';
+            BambooAPIUrl = BambooAPIUrl.replace('{BAMBOOAPI}', result)
+                .replace('{DATE}',datehelper.getYesterday());
             var request = require('request');
             request(BambooAPIUrl, function(error, response, body){
                 getBambooTimeOffResponse(error, response, body);
