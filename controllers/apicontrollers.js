@@ -29,7 +29,6 @@ var getBambooTimeOffResponse = function (error, response, body) {
 }
 
 var parseBambooResponse = function (err, result){
-    //var timeoffrequest = require('./../models/timeoffrequest.js');
     console.log('first function is done');
     var times = result.requests;
     console.log("getting times of request");
@@ -45,13 +44,7 @@ var processBamBooRespose = function (bamboomreponse){
         var _ = require('lodash');
         var democounter = 0;
         var datehelper = require('./../helpers/datehelper.js');
-        //console.log(bamboomreponse);
         _.forEach(bamboomreponse, function(value){
-            //if (democounter < 2){
-            //    var output = timeoffrequest.mavenlinkAPIOut(value);
-                //insertToMavenLinkRequest(output,result);
-            //}
-            //console.log(value.status[0].$.lastChanged);
             if (value.status[0].$.lastChanged == datehelper.getYesterday()){
                 console.log(value.$.id);
                 var output = timeoffrequest.mavenlinkAPIOut(value);
@@ -67,9 +60,6 @@ var insertToMavenLinkRequest = function(title,apitoken){
     var request = require('request');
     var totalurl = 'https://velir.mavenlink.com/api/v1/stories.json?story[title]={TITLE}&story[workspace_id]=11785877&story[story_type]=task&story[parent_id]=132729587&access_token={MAVENLINK}';
     totalurl = totalurl.replace('{TITLE}', title).replace('{MAVENLINK}',apitoken); 
-    console.log('title is' + totalurl);
-    console.log("Inserting into Mavinlink");
-
     request.post(totalurl, function(error, response, body){
     insertToMavenLinkResponse(error, response, body);
     });
@@ -81,6 +71,6 @@ var insertToMavenLinkResponse = function(error, response, body){
      }
      if (response.statusCode == 200)
      {
-         console.log("Data inserted");
+         console.log("Data inserted" + new Date());
      }
 }
