@@ -9,19 +9,16 @@
     var secret = "46ce07310cc2ac54c9563e391fd622cdb3599e9620a3ca3e9cc760e32b567e2b";
     var upload = multer({ dest: 'uploads/' });
 
-    var Converter = require("csvtojson");
-    var converter = new Converter.Converter({});
+    
     var responseObj = {
         successful: false,
         content: 'error'
     };
     router.post('/csv', upload.single('cvsfile'), function(req, res, next) {
-        converter.fromFile(req.file.path, function(err, result) {
-            console.log(result);
-            responseObj.successful = true;
-            responseObj.content = result;
-            res.send(JSON.stringify(responseObj));
-        });
+        var dataimporter = require('../controllers/dataImporter/dataimporter.js');
+        var r = 'done'
+        dataimporter.csv.processCSVLines(req.body.accessToken, req.file.path, function (result) {console.log(result) });
+        res.send(r);
     });
 
     router.get('/auth/:code', function(req, res, next) {
@@ -39,12 +36,11 @@
 
     router.get('/search/:accessKey/:term', function (req, res, next) {
         var search = require('../controllers/MavenlinkApi/searchcontroller.js');
-        console.log(req.params.accessKey + "  search " + req.params.term);
 
         var resultCb = function(error, response, body) {
             res.send(JSON.stringify(body));
         }
-        search.search(req.params.accessKey, req.params.term, resultCb);
+        search.search(req.params.accessKey, [req.params.term, 'velir', 'bayer'], resultCb);
         
         
     });

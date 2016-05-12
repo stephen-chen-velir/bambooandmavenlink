@@ -23,6 +23,9 @@
         }).then(function mySucces(response) {
             if (response.data.successful) {
                 $scope.data.accesstoken = response.data.content.access_token;
+
+            } else {
+                window.location.href = "https://app.mavenlink.com/oauth/authorize?response_type=code&client_id=" + clientCode + "&redirect_uri=" + callbackUrl;
             }
         });
     }
@@ -35,6 +38,7 @@
         } else {
             authenticate(code);
         }
+       
     };
 
    
