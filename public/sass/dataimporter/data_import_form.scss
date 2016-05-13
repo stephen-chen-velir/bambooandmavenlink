@@ -1,0 +1,13 @@
+﻿@import '../_variables.scss';
+
+.dataimport {
+    &-btn-submit {
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-color: $button_bgcolor;
+        color: $button_color;
+        @include breakpoint(small) {
+            width:100%;
+        } 
+    }
+}

@@ -8,7 +8,7 @@
     var callbackUrl = encodeURIComponent("http://mavenlink.sol.velir.com/bulk.htm");
     var secret = "46ce07310cc2ac54c9563e391fd622cdb3599e9620a3ca3e9cc760e32b567e2b";
     var upload = multer({ dest: 'uploads/' });
-
+    var mavenlinkapi = require('../controllers/MavenlinkApi/mavenlinkapi.js');
     
     var responseObj = {
         successful: false,
@@ -16,9 +16,10 @@
     };
     router.post('/csv', upload.single('cvsfile'), function(req, res, next) {
         var dataimporter = require('../controllers/dataImporter/dataimporter.js');
-        var r = 'done'
-        dataimporter.csv.processCSVLines(req.body.accessToken, req.file.path, function (result) {console.log(result) });
-        res.send(r);
+        var r = 'done';
+        console.log(typeof (mavenlinkapi.customFields.getChoices));
+        mavenlinkapi.customFields.getChoices(req.body.accessToken, '95357', function (error, result) { res.send( result) });
+        //dataimporter.csv.processCSVLines(req.body.accessToken, req.file.path, function (result) {console.log(result) });
     });
 
     router.get('/auth/:code', function(req, res, next) {
@@ -34,6 +35,10 @@
         });
     });
 
+    router.get('/customchoices/:id', function(req, res, next) {
+        
+    });
+
     router.get('/search/:accessKey/:term', function (req, res, next) {
         var search = require('../controllers/MavenlinkApi/searchcontroller.js');
 
@@ -41,8 +46,6 @@
             res.send(JSON.stringify(body));
         }
         search.search(req.params.accessKey, [req.params.term, 'velir', 'bayer'], resultCb);
-        
-        
     });
 
     var authResponse = function(error, response, body, res) {

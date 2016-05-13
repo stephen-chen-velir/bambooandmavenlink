@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="bulkEdit">
 <head ng-app>
     <title>Bulk Update</title>
+
+    <link href="stylesheets/dataimporter.css" rel="stylesheet" />
     <script src="./scripts/dist/angular/angular.js"></script>
 
     <script>
@@ -10,11 +12,6 @@
     <script src="./controllers/bulkEdit.js"></script>
 </head>
 <body ng-controller="bulkEditCtrl">
-    <form id="uploadForm" enctype="multipart/form-data" action="bulkedit/csv" method="post">
-        <input type="file" name="cvsfile" />
-        <input type="hidden" name="accessToken" ng-value="data.accesstoken" />
-        <br/>
-        <input type="submit" />
-    </form>
+    <ng-include src="'views/dataImportForm.html'"></ng-include>
 </body>
 </html>

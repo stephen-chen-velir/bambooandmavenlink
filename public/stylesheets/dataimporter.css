@@ -1,0 +1,8 @@
+.dataimport-btn-submit {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #39a257;
+  color: #FFFFFF; }
+  @media only screen and (max-width: 460px) {
+    .dataimport-btn-submit {
+      width: 100%; } }
