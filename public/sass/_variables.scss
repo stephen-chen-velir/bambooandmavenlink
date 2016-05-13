@@ -1,0 +1,17 @@
+﻿@mixin breakpoint($point) {
+	@if $point == large {
+		// 'Begin Responsive Experience'
+		@media only screen and (max-width:1012px) { @content; }
+	}
+	@else if $point == medium {
+		// 'Start iPad Portrait
+		@media only screen and (max-width:767px) { @content; }
+	}
+	@else if $point == small {
+		// 'smaller than tablets, larger than phones'
+		@media only screen and (max-width:460px) { @content; }
+	}
+	@else {
+		@media only screen and (max-width:$point + px) { @content; }
+	}
+}
