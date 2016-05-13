@@ -6,7 +6,7 @@
         request({
             method: method,
             url: url
-        }, function(error, response, body) { oncompleted(error, response) }).auth(null, null, true, token);
+        }, function(error, response, body) { oncompleted(error, response, body) }).auth(null, null, true, token);
     };
 
     mlRequest.put = function (token, url, oncompleted) {
@@ -15,6 +15,10 @@
 
     mlRequest.get = function(token, url, oncompleted) {
         urlRequest('GET', token, url, oncompleted);
+    };
+
+    mlRequest.post = function (token, url, oncompleted) {
+        urlRequest('POST', token, url, oncompleted);
     };
 
     return mlRequest;
