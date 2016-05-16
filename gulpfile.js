@@ -48,4 +48,6 @@ gulp.task('serve', ['style', 'sass:watch'], function () {
         .on('restart', function (ev) {
             console.log('Restarting....');
         });
-}); 
+});
+
+gulp.task('default', ['style', 'sass', 'sass:watch', 'serve']);
